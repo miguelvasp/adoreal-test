@@ -1,0 +1,108 @@
+<section class="shell">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Appointments</p>
+      <h1>Daily Schedule</h1>
+      <p class="subtitle">
+        Create and track upcoming consultations with a clean, deterministic
+        flow.
+      </p>
+    </div>
+  </header>
+
+  <div class="grid">
+    <form class="card form-card" [formGroup]="form" (ngSubmit)="submit()">
+      <h2>New appointment</h2>
+
+      <label>
+        Patient name
+        <input
+          type="text"
+          formControlName="patientName"
+          placeholder="Jordan Lee"
+        />
+      </label>
+      <p
+        class="field-error"
+        *ngIf="
+          form.controls.patientName.touched && form.controls.patientName.invalid
+        "
+      >
+        Please enter a patient name.
+      </p>
+
+      <label>
+        Starts at
+        <input type="datetime-local" formControlName="startsAt" />
+      </label>
+      <p
+        class="field-error"
+        *ngIf="form.controls.startsAt.touched && form.controls.startsAt.invalid"
+      >
+        Choose a date and time.
+      </p>
+
+      <label>
+        Notes
+        <textarea
+          rows="4"
+          formControlName="notes"
+          placeholder="Optional context..."
+        ></textarea>
+      </label>
+
+      <button type="submit" [disabled]="form.invalid || (loading$ | async)">
+        {{ (loading$ | async) ? "Saving..." : "Create appointment" }}
+      </button>
+    </form>
+
+    <div class="card list-card">
+      <div class="list-header">
+        <h2>Upcoming</h2>
+        <button
+          type="button"
+          class="ghost"
+          (click)="loadAppointments()"
+          [disabled]="loading$ | async"
+        >
+          Refresh
+        </button>
+      </div>
+
+      <div class="list-body">
+        <ng-container *ngIf="loading$ | async; else loaded">
+          <p class="state">Loading appointments...</p>
+        </ng-container>
+
+        <ng-template #loaded>
+          <ng-container *ngIf="error$ | async as errorMessage; else list">
+            <p class="state error">{{ errorMessage }}</p>
+          </ng-container>
+
+          <ng-template #list>
+            <ng-container *ngIf="appointments$ | async as appointments">
+              <p class="state empty" *ngIf="appointments.length === 0">
+                No appointments yet.
+              </p>
+              <ul *ngIf="appointments.length > 0">
+                <li
+                  *ngFor="let appointment of appointments; trackBy: trackById"
+                >
+                  <div>
+                    <p class="name">{{ appointment.patientName }}</p>
+                    <p class="time">
+                      {{ appointment.startsAt | date : "medium" }}
+                    </p>
+                  </div>
+                  <p class="notes" *ngIf="appointment.notes">
+                    {{ appointment.notes }}
+                  </p>
+                </li>
+              </ul>
+            </ng-container>
+          </ng-template>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>
