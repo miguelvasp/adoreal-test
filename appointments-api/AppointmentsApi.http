@@ -1,0 +1,20 @@
+@AppointmentsApi_HostAddress = http://localhost:5000
+
+GET {{AppointmentsApi_HostAddress}}/health
+Accept: application/json
+
+###
+
+GET {{AppointmentsApi_HostAddress}}/appts
+Accept: application/json
+
+###
+
+POST {{AppointmentsApi_HostAddress}}/appts
+Content-Type: application/json
+
+{
+  "patientName": "Ada Lovelace",
+  "startsAt": "2030-01-15T14:30:00Z",
+  "notes": "Initial consultation"
+}

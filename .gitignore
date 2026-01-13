@@ -1,0 +1,54 @@
+# ===== .NET build outputs =====
+**/bin/
+**/obj/
+**/out/
+**/TestResults/
+
+# ===== Visual Studio / Rider / VS Code =====
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+*.DotSettings.user
+.vscode/
+
+# ===== Logs =====
+*.log
+
+# ===== ASP.NET Core =====
+# Local override configs (do not commit secrets)
+appsettings.*.local.json
+appsettings.Development.local.json
+
+# ===== EF Core / SQLite dev artifacts =====
+# SQLite database + WAL/SHM files
+*.db
+*.db-shm
+*.db-wal
+
+# If you want to be extra precise (optional):
+# appointments.dev.db*
+# appointments*.db*
+
+# ===== Temporary / backup files =====
+*.tmp
+*.bak
+*.Backup.tmp
+*~
+
+# ===== Coverage =====
+**/coverage/
+**/coverage.cobertura.xml
+**/*.coverage
+**/*.coveragexml
+
+# ===== Publish artifacts =====
+**/publish/
+**/artifacts/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
